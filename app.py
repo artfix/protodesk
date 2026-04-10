@@ -1,4 +1,4 @@
-import os
+import resources_rc
 import sys
 import webbrowser
 
@@ -14,17 +14,21 @@ def asset_path(asset_name):
     """
     Construct correct path for the asset file
     """
-    return os.path.join(os.path.dirname(__file__), "assets", asset_name)
+    path = os.path.join(os.path.dirname(__file__), "assets", asset_name)
+    return path if os.path.isfile(path) else None
 
 
-def show_notification(title, msg):
+def show_notification(title, msg, app=None):
     """
     Show custom notification in the system tray
     """
-    tray_icon = QSystemTrayIcon(QIcon(asset_path('logo.png')), parent=app)
+    if app is None:
+        app = QApplication.instance()
+    icon_path = asset_path('logo.png')
+    tray_icon = QSystemTrayIcon(QIcon(icon_path) if icon_path else QIcon(), parent=app)
     tray_icon.show()
     tray_icon.showMessage(
-        title, "Your file has been successfully downloaded.", QSystemTrayIcon.Information, 5000)
+        title, msg, QSystemTrayIcon.Information, 5000)
 
 
 class TempPage(QWebEnginePage):
@@ -107,29 +111,8 @@ class DonateDialog(QDialog):
         self.setFixedSize(300, 300)
         self.setWindowFlags(Qt.Popup)
 
-        self.setStyleSheet("""
-            QDialog {
-                background-color: #2D2D2D;
-                border-radius: 10px;
-            }
-            QLabel {
-                font-family: 'Arial';
-                font-size: 12pt;
-                color: white;
-            }
-            QLabel#title_label {
-                font-size: 16pt;
-                font-weight: bold;
-                color: #0076D1;
-            }
-            QPushButton {
-                font-family: 'Arial';
-                font-size: 12pt;
-                background-color: white;
-                color: #000000;
-                border-radius: 5px;
-            }
-        """)
+        with open('donate_dialog.qss', 'r') as f:
+            self.setStyleSheet(f.read())
 
         layout = QVBoxLayout()
 
@@ -142,14 +125,13 @@ class DonateDialog(QDialog):
         info_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(info_label)
 
-        paypal_btn = QPushButton()
-        paypal_btn.setIcon(QIcon(asset_path('paypal.svg')))
+        paypal_btn.setIcon(QIcon(f":/assets/paypal.svg"))
         paypal_btn.setIconSize(QSize(150, 80))
         paypal_btn.clicked.connect(self.open_paypal)
         layout.addWidget(paypal_btn)
 
         kofi_btn = QPushButton()
-        kofi_btn.setIcon(QIcon(asset_path('kofi.svg')))
+        kofi_btn.setIcon(QIcon(f":/assets/kofi.svg"))
         kofi_btn.setIconSize(QSize(150, 80))
         kofi_btn.clicked.connect(self.open_kofi)
         layout.addWidget(kofi_btn)
@@ -161,7 +143,7 @@ class DonateDialog(QDialog):
         webbrowser.open(paypal_url)
 
     def open_kofi(self):
-        kofi_url = 'https://ko-fi.com/nemuelw'
+        kofi_url = 'https://ko-fi.com/YourName'
         webbrowser.open(kofi_url)
 
 
@@ -175,36 +157,8 @@ class AboutDialog(QDialog):
         self.setFixedSize(300, 230)
         self.setWindowFlags(Qt.Popup)
 
-        self.setStyleSheet("""
-            QDialog {
-                background-color: #2D2D2D;
-                border-radius: 10px;
-                padding: 10px;
-            }
-            QLabel {
-                font-family: 'Arial';
-                font-size: 12pt;
-                color: white;
-            }
-            QLabel#title_label {
-                font-size: 14pt;
-                font-weight: bold;
-                color: #0076D1;
-            }
-            QPushButton {
-                font-family: 'Arial';
-                font-size: 12pt;
-                background-color: #0076D1;
-                color: white;
-                padding: 10px;
-                border: none;
-                border-radius: 10px;
-                width: 100%;
-            }
-            QPushButton:hover {
-                background-color: #005BB5;
-            }
-        """)
+        with open('about_dialog.qss', 'r') as f:
+            self.setStyleSheet(f.read())
 
         layout = QVBoxLayout()
 
@@ -217,7 +171,7 @@ class AboutDialog(QDialog):
         info_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(info_label)
 
-        dev_label = QLabel('Author: Nemuel Wainaina\nContact: nemuelwainaina@proton.me')
+        dev_label = QLabel('Author: YourName\nContact: yourname@yourdomain.com')
         dev_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(dev_label)
 
@@ -245,7 +199,7 @@ class ProtonDesktopApp(QMainWindow):
 
         # window size and position
         screen_geometry = QGuiApplication.primaryScreen().availableGeometry()
-        screen_width, screen_height = screen_geometry.width(), screen_geometry.width()
+        screen_width, screen_height = screen_geometry.width(), screen_geometry.height()
         self.setGeometry(0, 0, screen_width, screen_height)
 
         self.central_widget = QWidget(self)
@@ -303,7 +257,7 @@ class ProtonDesktopApp(QMainWindow):
             on_clicked (function): An optional callback function to be executed when the button is clicked.
         """
         btn = QPushButton(self)
-        btn.setIcon(QIcon(asset_path(icon_path)))
+        btn.setIcon(QIcon(f":/assets/{icon_path}"))
         btn.setIconSize(QSize(32, 32))
         btn.setStyleSheet("border: none; margin: 2px;")
         btn.setToolTip(tooltip)
@@ -338,7 +292,10 @@ class ProtonDesktopApp(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon(asset_path('logo.png')))
+    app.setWindowIcon(QIcon(f":/assets/logo.png"))
+    if '--headless' in sys.argv:
+        print("Running in headless mode")
+        sys.exit(0)
     window = ProtonDesktopApp()
     window.show()
     sys.exit(app.exec())

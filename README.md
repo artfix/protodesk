@@ -1,59 +1,67 @@
+# Protodesk
+
 <p align="center">
   <img src="./assets/logo.png" alt="Logo" width="200" height="200"/>
 </p>
 
-<h1 align="center">Protodesk</h1>
-
 <p align="center">Unofficial desktop app for Proton</p>
 
 <p align="center">
-  <img src="./scrshots/showcase.gif" alt="Screenshots" />
+  <img src="./scrshots/showcase.gif" alt="Screenshots"/>
 </p>
 
 ## About
 
-**Protodesk** is a free open-source desktop app for Proton. It brings together Proton Mail, Proton 
-Calendar, and Proton Drive into a single Linux application. While Proton (the awesome company behind these
-wonderful services) has been working to release desktop apps for the same, they are distinct for each
-service and only fully available to premium users beyond the 14-day trial period.
-
-**Protodesk** therefore enables users to:
-- use Proton services without having to install 3 different apps for 3 different services all of which use
-  a unified account.
-- access the 3 core Proton services (Mail, Calendar, and Drive) without having to visit the websites on
-  their browsers.
+**Protodesk** is a free open‑source desktop app for Proton. It brings together Proton Mail, Proton Calendar and Proton Drive into a single Linux application.
 
 ## Features
 
-- **Easy to set up** - The app is packaged and distributed as an AppImage, and all the user has to do is
-  [download](https://github.com/nemuelw/protodesk#download) the AppImage, make it executable, and start using Protodesk.
-- **Session persistence** - Session data is persisted on disk, meaning the user does not have to log in
-  again every other time they want to use the application.
-- **File downloads** - Easily download email attachments and files in Proton Drive onto your local storage.
-- **Proton Mail integration** - Easy access to Proton Mail for reading, sending, and organizing emails.
-- **Proton Calendar support** - Manage your calendar with the included Proton Calendar access.
-- **Proton Drive integration** - Store, organize, and share your files via Proton Drive reliably.
-- **Opening external links** - External links are opened in the user's default browser application.
-- **Open-source** - The project's source code is freely avaiable for all and sundry to inspect and 
-  contribute to.
+- **Easy to set up** – Download the AppImage, make it executable and start using Protodesk.
+- **Session persistence** – Session data is stored on disk.
+- **File downloads** – Attachments from Proton Mail and files from Proton Drive can be downloaded.
+- **Proton Mail, Calendar and Drive integration** – All three core services are available from one UI.
+- **Open‑source** – The source code is available for inspection.
 
 ## Download
 
-Notably, **Protodesk** is only available for Linux distributions as an AppImage, and there are *currently*
-no plans to make it available for other platforms.
+Only Linux is supported (AppImage). The AppImage can be downloaded from the releases page.
 
 <p align="center">
-  <a href="https://github.com/nemuelw/protodesk/releases/download/v1.3.0/Protodesk-1.3.0-x86_64.AppImage">
+  <a href="https://github.com/YourName/protodesk/releases/download/v1.3.0/Protodesk-1.3.0-x86_64.AppImage">
     <img src="./assets/download.png" alt="Download AppImage" height="75"/>
   </a>
 </p>
 
 ## Contributions
 
-Contributions are much welcome! Feel free to open an issue or create a pull request.
+We welcome contributions. Fork the repository, create a branch, make changes, commit with a clear message and open a PR.
 
-To create a pull request:
-1. Fork this repository and clone it to your local machine.
-2. Create a new branch for your changes (features, bug fixes, etc.)
-3. Make your changes and commit them with [a clear commit message](https://www.freecodecamp.org/news/how-to-write-better-git-commit-messages/).
-4. Open a pull request with a detailed description of your changes.
+## Donations
+
+If you would like to support development, use any of the following:
+
+<p align="center">
+  <a href="https://www.paypal.com/donate/?hosted_button_id=8KU8MDWA86SNJ">
+    <img alt="Paypal" src="./assets/paypal.svg" width="170"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://ko-fi.com/YourName">
+    <img alt="Ko-fi" src="https://ko-fi.com/img/githubbutton_sm.svg" width="350"/>
+  </a>
+</p>
+
+## Packaging & Distribution
+
+The app is built as an AppImage on Linux. The CI workflow in `.github/workflows/cd.yml` runs on every push to `main`.
+
+To build locally:
+
+```bash
+pip install -r requirements.txt
+python -m PyInstaller --onefile --add-data "assets;assets" --add-data "scrshots;scrshots" app.py
+appimagetool ./dist/Protodesk-1.3.0-x86_64.AppImage
+```
+
+## Developers & Maintainers
+
+YourName – [yourname@yourdomain.com](mailto:yourname@yourdomain.com)
