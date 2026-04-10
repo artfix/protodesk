@@ -1,4 +1,4 @@
-import resources_rc
+import os
 import sys
 import webbrowser
 
@@ -11,11 +11,36 @@ from PySide6.QtWidgets import (QApplication, QDialog, QFileDialog, QHBoxLayout, 
 
 
 def asset_path(asset_name):
-    """
-    Construct correct path for the asset file
+    """Return absolute path to an asset in the assets folder.
+
+    Parameters
+    ----------
+    asset_name: str
+        Name of the file inside the ``assets`` directory.
+
+    Returns
+    -------
+    str | None
+        Full path if the file exists, otherwise ``None``.
     """
     path = os.path.join(os.path.dirname(__file__), "assets", asset_name)
     return path if os.path.isfile(path) else None
+
+
+def get_qss_path(qss_name):
+    """Return absolute path to a qss file next to this module.
+
+    Parameters
+    ----------
+    qss_name: str
+        File name of the qss file (e.g. ``'about_dialog.qss'``).
+
+    Returns
+    -------
+    str
+        Full path.
+    """
+    return os.path.join(os.path.dirname(__file__), qss_name)
 
 
 def show_notification(title, msg, app=None):
@@ -101,50 +126,7 @@ class ProtonWebView(QWebEngineView):
             QTimer.singleShot(500, lambda: self.check_download_status(download))
 
 
-class DonateDialog(QDialog):
-    """
-    Dialog for donating to the project
-    """
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setWindowTitle('Donate')
-        self.setFixedSize(300, 300)
-        self.setWindowFlags(Qt.Popup)
 
-        with open('donate_dialog.qss', 'r') as f:
-            self.setStyleSheet(f.read())
-
-        layout = QVBoxLayout()
-
-        title_label = QLabel('Donate')
-        title_label.setObjectName("title_label")
-        title_label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(title_label)
-
-        info_label = QLabel("Support the development of \nProtodesk.")
-        info_label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(info_label)
-
-        paypal_btn.setIcon(QIcon(f":/assets/paypal.svg"))
-        paypal_btn.setIconSize(QSize(150, 80))
-        paypal_btn.clicked.connect(self.open_paypal)
-        layout.addWidget(paypal_btn)
-
-        kofi_btn = QPushButton()
-        kofi_btn.setIcon(QIcon(f":/assets/kofi.svg"))
-        kofi_btn.setIconSize(QSize(150, 80))
-        kofi_btn.clicked.connect(self.open_kofi)
-        layout.addWidget(kofi_btn)
-
-        self.setLayout(layout)
-
-    def open_paypal(self):
-        paypal_url = 'https://www.paypal.com/donate/?hosted_button_id=8KU8MDWA86SNJ'
-        webbrowser.open(paypal_url)
-
-    def open_kofi(self):
-        kofi_url = 'https://ko-fi.com/YourName'
-        webbrowser.open(kofi_url)
 
 
 class AboutDialog(QDialog):
@@ -153,21 +135,21 @@ class AboutDialog(QDialog):
     """
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle('About Protodesk')
+        self.setWindowTitle('About ProtonDeskX')
         self.setFixedSize(300, 230)
         self.setWindowFlags(Qt.Popup)
 
-        with open('about_dialog.qss', 'r') as f:
-            self.setStyleSheet(f.read())
+        with open(get_qss_path('about_dialog.qss'), 'r') as f:
+                self.setStyleSheet(f.read())
 
         layout = QVBoxLayout()
 
-        title_label = QLabel('Protodesk')
+        title_label = QLabel('ProtonDeskX')
         title_label.setObjectName("title_label")
         title_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(title_label)
 
-        info_label = QLabel('Version 1.3.0\nUnofficial desktop app for Proton.')
+        info_label = QLabel('Version 1.3.0\nUnofficial desktop app for ProtonDeskX.')
         info_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(info_label)
 
@@ -184,7 +166,7 @@ class AboutDialog(QDialog):
 
 class ProtonDesktopApp(QMainWindow):
     """
-    Main application window for Protodesk
+    Main application window for ProtonDeskX
     """
     def __init__(self):
         super().__init__()
@@ -195,7 +177,7 @@ class ProtonDesktopApp(QMainWindow):
             'drive': 'https://drive.proton.me'
         }
 
-        self.setWindowTitle('Protodesk')
+        self.setWindowTitle('ProtonDeskX')
 
         # window size and position
         screen_geometry = QGuiApplication.primaryScreen().availableGeometry()
@@ -227,12 +209,11 @@ class ProtonDesktopApp(QMainWindow):
         self.sidebar.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         self.sidebar.setStyleSheet('background-color: #505264;')
 
-        # sidebar buttons: mail, calendar, drive, donate, about
+        # sidebar buttons: mail, calendar, drive, about
         self.add_button('mail', 'Mail', 'mail.svg')
         self.add_button('calendar', 'Calendar', 'calendar.svg')
         self.add_button('drive', 'Drive', 'drive.svg')
-        self.sidebar_layout.addStretch()
-        self.add_button('donate', 'Donate', 'donate.svg', self.show_donate_dialog)
+# Removed donate dialog and related logic
         self.add_button('about', 'About', 'about.svg', self.show_about_dialog)
 
         self.main_layout.addWidget(self.sidebar, alignment=Qt.AlignLeft)
@@ -257,7 +238,7 @@ class ProtonDesktopApp(QMainWindow):
             on_clicked (function): An optional callback function to be executed when the button is clicked.
         """
         btn = QPushButton(self)
-        btn.setIcon(QIcon(f":/assets/{icon_path}"))
+        btn.setIcon(QIcon(asset_path(icon_path)))
         btn.setIconSize(QSize(32, 32))
         btn.setStyleSheet("border: none; margin: 2px;")
         btn.setToolTip(tooltip)
@@ -277,11 +258,7 @@ class ProtonDesktopApp(QMainWindow):
         destination_url = self.proton_services.get(service_name, 'mail')
         self.web.load(QUrl(destination_url))
 
-    def show_donate_dialog(self):
-        """
-        Show the 'Donate' dialog
-        """
-        DonateDialog(self).show()
+# Removed donate dialog and related logic
 
     def show_about_dialog(self):
         """
@@ -292,7 +269,7 @@ class ProtonDesktopApp(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon(f":/assets/logo.png"))
+    app.setWindowIcon(QIcon(asset_path('logo.png')))
     if '--headless' in sys.argv:
         print("Running in headless mode")
         sys.exit(0)
