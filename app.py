@@ -215,7 +215,7 @@ class ProtonDesktopApp(QMainWindow):
         self.add_button('mail', 'Mail', 'mail.svg')
         self.add_button('calendar', 'Calendar', 'calendar.svg')
         self.add_button('drive', 'Drive', 'drive.svg')
-# Removed donate dialog and related logic
+        # Removed donate dialog and related logic
         self.add_button('about', 'About', 'about.svg', self.show_about_dialog)
         self.add_button('dark_mode', 'Dark Mode', 'dark_mode.svg', self.toggle_dark_mode)
 
@@ -228,7 +228,7 @@ class ProtonDesktopApp(QMainWindow):
         self.web = ProtonWebView(profile, self)
         self.main_layout.addWidget(self.web)
 
-self.main_layout.setStretchFactor(self.web, 1)
+        self.main_layout.setStretchFactor(self.web, 1)
         self.dark_mode = False
 
     def add_button(self, service_name, tooltip, icon_path, on_clicked=None):
@@ -276,7 +276,7 @@ self.main_layout.setStretchFactor(self.web, 1)
         self.web.page().runJavaScript(js)
 
 
-# Removed donate dialog and related logic
+        # Removed donate dialog and related logic
 
     def show_about_dialog(self):
         """
