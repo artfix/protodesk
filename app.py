@@ -201,11 +201,10 @@ class ProtonDesktopApp(QMainWindow):
         ''')
 
         # sidebar
-        self.sidebar = QWidget(self)
-        self.sidebar_layout = QVBoxLayout(self.sidebar)
+        self.sidebar = QLabel('ProtonDeskX', self)
         self.sidebar.setFixedWidth(60)
-        self.sidebar.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        self.sidebar.setStyleSheet('background-color: #505264;')
+        self.sidebar.setAlignment(Qt.AlignCenter)
+        self.sidebar.setStyleSheet('background-color: #505264; color: white;')
 
         # sidebar buttons: mail, calendar, drive, about
         self.add_button('mail', 'Mail', 'mail.svg')
@@ -213,7 +212,7 @@ class ProtonDesktopApp(QMainWindow):
         self.add_button('drive', 'Drive', 'drive.svg')
         # Removed donate dialog and related logic
         self.add_button('about', 'About', 'about.svg', self.show_about_dialog)
-        self.sidebar_layout.addStretch()
+        # No buttons added to sidebar
 
         self.main_layout.addWidget(self.sidebar)
 
@@ -256,7 +255,7 @@ class ProtonDesktopApp(QMainWindow):
         btn.clicked.connect(lambda:
                             on_clicked() if on_clicked else self.load_proton_service(service_name))
 
-        self.sidebar_layout.addWidget(btn)
+        # No buttons added to sidebar
 
     def load_proton_service(self, service_name):
         """Navigate web view to the given Proton service."""
