@@ -126,6 +126,7 @@ class ProtonWebView(QWebEngineView):
         else:
             QTimer.singleShot(500, lambda: self.check_download_status(download))
 
+
 class AboutDialog(QDialog):
     """
     Dialog for info on the application: version, description, author, and contact information.
