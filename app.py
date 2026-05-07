@@ -255,9 +255,9 @@ class ProtonDesktopApp(QMainWindow):
             self.web.page().setUrl(QUrl(url))
         else:
             show_notification('Service error', f"Unknown service: {service_name}")
-        """
-        Toggle dark mode for the current email view.
-        """
+
+    def toggle_dark_mode(self):
+        """Toggle dark mode for the current email view."""
         self.dark_mode = not self.dark_mode
         if self.dark_mode:
             js = """
