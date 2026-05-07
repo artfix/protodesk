@@ -213,7 +213,6 @@ class ProtonDesktopApp(QMainWindow):
         self.add_button('drive', 'Drive', 'drive.svg')
         # Removed donate dialog and related logic
         self.add_button('about', 'About', 'about.svg', self.show_about_dialog)
-        self.add_button('dark_mode', 'Dark Mode', 'dark_mode.svg', self.toggle_dark_mode)
 
         self.main_layout.addWidget(self.sidebar, alignment=Qt.AlignLeft)
 
@@ -263,31 +262,15 @@ class ProtonDesktopApp(QMainWindow):
 
     def toggle_dark_mode(self):
         """Toggle dark mode for the current email view."""
-        self.dark_mode = not self.dark_mode
-        if self.dark_mode:
-            js = """
-            document.documentElement.style.backgroundColor = '#1e1e1e';
-            document.body.style.backgroundColor = '#1e1e1e';
-            document.body.style.color = '#e0e0e0';
-            let links = document.querySelectorAll('a');
-            links.forEach(l=>l.style.color='#90caf9');
-            """
-        else:
-            js = """
-            document.documentElement.style.backgroundColor = '';
-            document.body.style.backgroundColor = '';
-            document.body.style.color = '';
-            let links = document.querySelectorAll('a');
-            links.forEach(l=>l.style.color='');
-            """
-        self.web.page().runJavaScript(js)
-        # Removed donate dialog and related logic
+        # Dark mode feature removed; no-op
+        pass
+
 
     def show_about_dialog(self):
         """
         Show the 'About' dialog
         """
-        AboutDialog(self).show()
+        AboutDialog(self).exec_()
 
 
 if __name__ == "__main__":
