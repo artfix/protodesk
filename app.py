@@ -141,10 +141,10 @@ class AboutDialog(QDialog):
 
         layout = QVBoxLayout()
 
-            title_label = QLabel('ProtonDeskX')
-            title_label.setObjectName("title_label")
-            title_label.setAlignment(Qt.AlignCenter)
-            layout.addWidget(title_label)
+        title_label = QLabel('ProtonDeskX')
+        title_label.setObjectName("title_label")
+        title_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(title_label)
 
         info_label = QLabel('Version 1.4.0\nUnofficial desktop app for ProtonDeskX.')
         info_label.setAlignment(Qt.AlignCenter)
