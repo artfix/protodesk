@@ -238,7 +238,12 @@ class ProtonDesktopApp(QMainWindow):
             on_clicked (function): An optional callback function to be executed when the button is clicked.
         """
         btn = QPushButton(self)
-        btn.setIcon(QIcon(asset_path(icon_path)))
+        icon_file = asset_path(icon_path)
+        if icon_file:
+            btn.setIcon(QIcon(icon_file))
+        else:
+            btn.setIcon(QIcon())  # fallback empty icon
+            btn.setText(tooltip)  # show text if icon missing
         btn.setIconSize(QSize(32, 32))
         btn.setStyleSheet("border: none; margin: 2px;")
         btn.setToolTip(tooltip)
