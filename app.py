@@ -213,6 +213,7 @@ class ProtonDesktopApp(QMainWindow):
         self.add_button('drive', 'Drive', 'drive.svg')
         # Removed donate dialog and related logic
         self.add_button('about', 'About', 'about.svg', self.show_about_dialog)
+        self.sidebar_layout.addStretch()
 
         self.main_layout.addWidget(self.sidebar)
 
