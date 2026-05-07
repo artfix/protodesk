@@ -1,0 +1,62 @@
+name: Build & Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Install build deps
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build AppImage / binary
+        run: |
+          pyinstaller --onefile app.py
+
+      - name: Archive build
+        run: |
+          mkdir -p dist
+          cp dist/app dist/ProtonDeskX.AppImage
+
+      - name: Upload artifact (for download)
+        uses: actions/upload-artifact@v3
+        with:
+          name: ProtonDeskX
+          path: dist/ProtonDeskX.AppImage
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Download built binary
+        uses: actions/download-artifact@v3
+        with:
+          name: ProtonDeskX
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.sha }}
+          name: Release ${{ github.sha }}
+          files: |
+            ProtonDeskX.AppImage
+          draft: false
+          prerelease: false
