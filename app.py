@@ -6,8 +6,11 @@ from PySide6.QtCore import Slot, QSize, QUrl, Qt, QTimer
 from PySide6.QtGui import QIcon, QGuiApplication
 from PySide6.QtWebEngineCore import QWebEnginePage, QWebEngineDownloadRequest, QWebEngineProfile
 from PySide6.QtWebEngineWidgets import QWebEngineView
-QApplication, QFileDialog, QHBoxLayout, QMainWindow,
-                               QPushButton, QSizePolicy, QSystemTrayIcon, QWidget
+from PySide6.QtWidgets import (
+    QApplication, QFileDialog, QHBoxLayout, QMainWindow,
+    QPushButton, QSizePolicy, QSystemTrayIcon, QWidget
+)
+
 
 
 
