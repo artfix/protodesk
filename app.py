@@ -99,6 +99,8 @@ class ProtonWebView(QWebEngineView):
 
         # load initial page: Proton Mail
         self.page().setUrl(QUrl('https://mail.proton.me'))
+        # Theme toggle will be handled by the main app
+
 
     def handle_download(self, download: QWebEngineDownloadRequest):
         """
@@ -149,7 +151,7 @@ class AboutDialog(QDialog):
         title_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(title_label)
 
-        info_label = QLabel('Version 1.3.0\nUnofficial desktop app for ProtonDeskX.')
+        info_label = QLabel('Version 1.4.0\nUnofficial desktop app for ProtonDeskX.')
         info_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(info_label)
 
@@ -215,6 +217,7 @@ class ProtonDesktopApp(QMainWindow):
         self.add_button('drive', 'Drive', 'drive.svg')
 # Removed donate dialog and related logic
         self.add_button('about', 'About', 'about.svg', self.show_about_dialog)
+        self.add_button('dark_mode', 'Dark Mode', 'dark_mode.svg', self.toggle_dark_mode)
 
         self.main_layout.addWidget(self.sidebar, alignment=Qt.AlignLeft)
 
@@ -225,7 +228,8 @@ class ProtonDesktopApp(QMainWindow):
         self.web = ProtonWebView(profile, self)
         self.main_layout.addWidget(self.web)
 
-        self.main_layout.setStretchFactor(self.web, 1)
+self.main_layout.setStretchFactor(self.web, 1)
+        self.dark_mode = False
 
     def add_button(self, service_name, tooltip, icon_path, on_clicked=None):
         """
@@ -248,15 +252,29 @@ class ProtonDesktopApp(QMainWindow):
 
         self.sidebar_layout.addWidget(btn)
 
-    def load_proton_service(self, service_name):
+    def toggle_dark_mode(self):
         """
-        Load the page for the specified Proton service inside the webview.
+        Toggle dark mode for the current email view.
+        """
+        self.dark_mode = not self.dark_mode
+        if self.dark_mode:
+            js = """
+            document.documentElement.style.backgroundColor = '#1e1e1e';
+            document.body.style.backgroundColor = '#1e1e1e';
+            document.body.style.color = '#e0e0e0';
+            let links = document.querySelectorAll('a');
+            links.forEach(l=>l.style.color='#90caf9');
+            """
+        else:
+            js = """
+            document.documentElement.style.backgroundColor = '';
+            document.body.style.backgroundColor = '';
+            document.body.style.color = '';
+            let links = document.querySelectorAll('a');
+            links.forEach(l=>l.style.color='');
+            """
+        self.web.page().runJavaScript(js)
 
-        Args:
-            service_name (str): The name of the Proton service to load.
-        """
-        destination_url = self.proton_services.get(service_name, 'mail')
-        self.web.load(QUrl(destination_url))
 
 # Removed donate dialog and related logic
 

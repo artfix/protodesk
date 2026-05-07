@@ -27,7 +27,7 @@
 Only Linux is supported (AppImage). The AppImage can be downloaded from the releases page.
 
 <p align="center">
-  <a href="https://github.com/YourName/protodesk/releases/download/v1.3.0/Protodesk-1.3.0-x86_64.AppImage">
+  <a href="https://github.com/YourName/protodesk/releases/download/v1.4.0/Protodesk-1.4.0-x86_64.AppImage">
     <img src="./assets/download.png" alt="Download AppImage" height="75"/>
   </a>
 </p>
@@ -59,7 +59,7 @@ To build locally:
 ```bash
 pip install -r requirements.txt
 python -m PyInstaller --onefile --add-data "assets;assets" --add-data "scrshots;scrshots" app.py
-appimagetool ./dist/Protodesk-1.3.0-x86_64.AppImage
+appimagetool ./dist/Protodesk-1.4.0-x86_64.AppImage
 ```
 
 ## Developers & Maintainers

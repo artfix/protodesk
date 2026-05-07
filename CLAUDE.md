@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | Task | Command |
 |------|---------|
 | Install dependencies | `pip install -r requirements.txt` |
-| Build AppImage | `python -m PyInstaller --onefile --add-data "assets;assets" --add-data "scrshots;scrshots" app.py && appimagetool ./dist/Protodesk-1.3.0-x86_64.AppImage` |
+| Build AppImage | `python -m PyInstaller --onefile --add-data "assets;assets" --add-data "scrshots;scrshots" app.py && appimagetool ./dist/Protodesk-1.4.0-x86_64.AppImage` |
 | Run locally (debug) | `python app.py` |
 | Run a single test (if added) | `pytest <path/to/test_file.py>` |
 
