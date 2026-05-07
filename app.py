@@ -248,7 +248,13 @@ class ProtonDesktopApp(QMainWindow):
 
         self.sidebar_layout.addWidget(btn)
 
-    def toggle_dark_mode(self):
+    def load_proton_service(self, service_name):
+        """Navigate web view to the given Proton service."""
+        url = self.proton_services.get(service_name)
+        if url:
+            self.web.page().setUrl(QUrl(url))
+        else:
+            show_notification('Service error', f"Unknown service: {service_name}")
         """
         Toggle dark mode for the current email view.
         """
