@@ -214,7 +214,7 @@ class ProtonDesktopApp(QMainWindow):
         # Removed donate dialog and related logic
         self.add_button('about', 'About', 'about.svg', self.show_about_dialog)
 
-        self.main_layout.addWidget(self.sidebar, alignment=Qt.AlignLeft)
+        self.main_layout.addWidget(self.sidebar)
 
         # enable on-disk persistence for session data
         profile = QWebEngineProfile('protodesk')
