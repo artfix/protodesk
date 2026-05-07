@@ -239,7 +239,12 @@ class ProtonDesktopApp(QMainWindow):
         btn = QPushButton(self)
         icon_file = asset_path(icon_path)
         if icon_file:
-            btn.setIcon(QIcon(icon_file))
+            icon = QIcon(icon_file)
+            if icon.isNull() and icon_file.endswith('.svg'):
+                png_path = icon_file.rsplit('.svg', 1)[0] + '.png'
+                if os.path.isfile(png_path):
+                    icon = QIcon(png_path)
+            btn.setIcon(icon)
         else:
             btn.setIcon(QIcon())  # fallback empty icon
             btn.setText(tooltip)  # show text if icon missing
