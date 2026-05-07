@@ -6,8 +6,9 @@ from PySide6.QtCore import Slot, QSize, QUrl, Qt, QTimer
 from PySide6.QtGui import QIcon, QGuiApplication
 from PySide6.QtWebEngineCore import QWebEnginePage, QWebEngineDownloadRequest, QWebEngineProfile
 from PySide6.QtWebEngineWidgets import QWebEngineView
-from PySide6.QtWidgets import (QApplication, QDialog, QFileDialog, QHBoxLayout, QLabel, QMainWindow,
-                               QPushButton, QSizePolicy, QSystemTrayIcon, QVBoxLayout, QWidget)
+QApplication, QFileDialog, QHBoxLayout, QMainWindow,
+                               QPushButton, QSizePolicy, QSystemTrayIcon, QWidget
+
 
 
 def asset_path(asset_name):
@@ -127,40 +128,6 @@ class ProtonWebView(QWebEngineView):
             QTimer.singleShot(500, lambda: self.check_download_status(download))
 
 
-class AboutDialog(QDialog):
-    """
-    Dialog for info on the application: version, description, author, and contact information.
-    """
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setWindowTitle('About ProtonDeskX')
-        self.setFixedSize(300, 230)
-        self.setWindowFlags(Qt.Popup)
-
-        with open(get_qss_path('about_dialog.qss'), 'r') as f:
-            self.setStyleSheet(f.read())
-
-        layout = QVBoxLayout()
-
-        title_label = QLabel('ProtonDeskX')
-        title_label.setObjectName("title_label")
-        title_label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(title_label)
-
-        info_label = QLabel('Version 1.4.0\nUnofficial desktop app for ProtonDeskX.')
-        info_label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(info_label)
-
-        dev_label = QLabel('Author: YourName\nContact: yourname@yourdomain.com')
-        dev_label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(dev_label)
-
-        ok_button = QPushButton("Ok")
-        ok_button.clicked.connect(self.accept)
-        layout.addWidget(ok_button)
-
-        self.setLayout(layout)
-
 
 class ProtonDesktopApp(QMainWindow):
     """
@@ -169,11 +136,7 @@ class ProtonDesktopApp(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.proton_services = {
-            'mail': 'https://mail.proton.me',
-            'calendar': 'https://calendar.proton.me',
-            'drive': 'https://drive.proton.me'
-        }
+
 
         self.setWindowTitle('ProtonDeskX')
 
@@ -200,21 +163,6 @@ class ProtonDesktopApp(QMainWindow):
             }
         ''')
 
-        # sidebar
-        self.sidebar = QLabel('ProtonDeskX', self)
-        self.sidebar.setFixedWidth(60)
-        self.sidebar.setAlignment(Qt.AlignCenter)
-        self.sidebar.setStyleSheet('background-color: #505264; color: white;')
-
-        # sidebar buttons: mail, calendar, drive, about
-        self.add_button('mail', 'Mail', 'mail.svg')
-        self.add_button('calendar', 'Calendar', 'calendar.svg')
-        self.add_button('drive', 'Drive', 'drive.svg')
-        # Removed donate dialog and related logic
-        self.add_button('about', 'About', 'about.svg', self.show_about_dialog)
-        # No buttons added to sidebar
-
-        self.main_layout.addWidget(self.sidebar)
 
         # enable on-disk persistence for session data
         profile = QWebEngineProfile('protodesk')
@@ -224,58 +172,11 @@ class ProtonDesktopApp(QMainWindow):
         self.main_layout.addWidget(self.web)
 
         self.main_layout.setStretchFactor(self.web, 1)
-        self.dark_mode = False
-
-    def add_button(self, service_name, tooltip, icon_path, on_clicked=None):
-        """
-        Add a button to the sidebar with the specified service name, tooltip, and icon.
-
-        Args:
-            service_name (str): The name of the Proton service being represented by the button.
-            tooltip (str): The tooltip for the button.
-            icon_path (str): The path to the icon file to use for the button.
-            on_clicked (function): An optional callback function to be executed when the button is clicked.
-        """
-        btn = QPushButton(self)
-        icon_file = asset_path(icon_path)
-        if icon_file:
-            icon = QIcon(icon_file)
-            if icon.isNull() and icon_file.endswith('.svg'):
-                png_path = icon_file.rsplit('.svg', 1)[0] + '.png'
-                if os.path.isfile(png_path):
-                    icon = QIcon(png_path)
-            btn.setIcon(icon)
-        else:
-            btn.setIcon(QIcon())  # fallback empty icon
-            btn.setText(tooltip)  # show text if icon missing
-        btn.setIconSize(QSize(32, 32))
-        btn.setStyleSheet("border: none; margin: 2px;")
-        btn.setToolTip(tooltip)
-
-        btn.clicked.connect(lambda:
-                            on_clicked() if on_clicked else self.load_proton_service(service_name))
-
-        # No buttons added to sidebar
-
-    def load_proton_service(self, service_name):
-        """Navigate web view to the given Proton service."""
-        url = self.proton_services.get(service_name)
-        if url:
-            self.web.page().setUrl(QUrl(url))
-        else:
-            show_notification('Service error', f"Unknown service: {service_name}")
-
-    def toggle_dark_mode(self):
-        """Toggle dark mode for the current email view."""
-        # Dark mode feature removed; no-op
-        pass
 
 
-    def show_about_dialog(self):
-        """
-        Show the 'About' dialog
-        """
-        AboutDialog(self).exec_()
+
+
+
 
 
 if __name__ == "__main__":

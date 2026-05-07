@@ -16,11 +16,10 @@
 
 ## Features
 
-- **Easy to set up** – Download the AppImage, make it executable and start using Protodesk.
-- **Session persistence** – Session data is stored on disk.
-- **File downloads** – Attachments from Proton Mail and files from Proton Drive can be downloaded.
-- **Proton Mail, Calendar and Drive integration** – All three core services are available from one UI.
-- **Open‑source** – The source code is available for inspection.
+- **Single web view** – the app loads Proton Mail directly.
+- **Session persistence** – session data is stored on disk.
+- **File downloads** – attachments from Proton Mail can be downloaded.
+- **Open‑source** – the source code is available for inspection.
 
 ## Download
 
@@ -36,19 +35,7 @@ Only Linux is supported (AppImage). The AppImage can be downloaded from the rele
 
 We welcome contributions. Fork the repository, create a branch, make changes, commit with a clear message and open a PR.
 
-## Donations
 
-If you would like to support development, use any of the following:
-
-<p align="center">
-  <a href="https://www.paypal.com/donate/?hosted_button_id=8KU8MDWA86SNJ">
-    <img alt="Paypal" src="./assets/paypal.svg" width="170"/>
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://ko-fi.com/YourName">
-    <img alt="Ko-fi" src="https://ko-fi.com/img/githubbutton_sm.svg" width="350"/>
-  </a>
-</p>
 
 ## Packaging & Distribution
 

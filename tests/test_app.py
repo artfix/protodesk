@@ -1,20 +1,11 @@
 import unittest
 
-
-# Import the application module
-try:
-    import app
-except Exception:
-    # If import fails, the test will report the error
-    raise
-
+import app
 
 class TestApp(unittest.TestCase):
-
     def test_import(self):
         """Ensure the main module imports without error."""
         self.assertTrue(hasattr(app, 'ProtonDesktopApp'))
-
 
 if __name__ == "__main__":
     unittest.main()

@@ -4,9 +4,6 @@
         <file>assets/mail.svg</file>
         <file>assets/calendar.svg</file>
         <file>assets/drive.svg</file>
-        <file>assets/donate.svg</file>
-        <file>assets/about.svg</file>
-        <file>assets/paypal.svg</file>
-        <file>assets/kofi.svg</file>
+
     </qresource>
 </RCC>
