@@ -101,7 +101,6 @@ class ProtonWebView(QWebEngineView):
         self.page().setUrl(QUrl('https://mail.proton.me'))
         # Theme toggle will be handled by the main app
 
-
     def handle_download(self, download: QWebEngineDownloadRequest):
         """
         Handle a file download request
@@ -127,10 +126,6 @@ class ProtonWebView(QWebEngineView):
         else:
             QTimer.singleShot(500, lambda: self.check_download_status(download))
 
-
-
-
-
 class AboutDialog(QDialog):
     """
     Dialog for info on the application: version, description, author, and contact information.
@@ -142,14 +137,14 @@ class AboutDialog(QDialog):
         self.setWindowFlags(Qt.Popup)
 
         with open(get_qss_path('about_dialog.qss'), 'r') as f:
-                self.setStyleSheet(f.read())
+            self.setStyleSheet(f.read())
 
         layout = QVBoxLayout()
 
-        title_label = QLabel('ProtonDeskX')
-        title_label.setObjectName("title_label")
-        title_label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(title_label)
+            title_label = QLabel('ProtonDeskX')
+            title_label.setObjectName("title_label")
+            title_label.setAlignment(Qt.AlignCenter)
+            layout.addWidget(title_label)
 
         info_label = QLabel('Version 1.4.0\nUnofficial desktop app for ProtonDeskX.')
         info_label.setAlignment(Qt.AlignCenter)
@@ -274,8 +269,6 @@ class ProtonDesktopApp(QMainWindow):
             links.forEach(l=>l.style.color='');
             """
         self.web.page().runJavaScript(js)
-
-
         # Removed donate dialog and related logic
 
     def show_about_dialog(self):
