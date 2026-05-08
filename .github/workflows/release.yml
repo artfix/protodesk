@@ -10,8 +10,7 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v4
@@ -24,20 +23,14 @@ jobs:
           pip install pyinstaller
 
       - name: Build AppImage / binary
-        run: |
-          pyinstaller --onefile app.py
+        run: pyinstaller --onefile app.py
 
       - name: Archive build
         run: |
           mkdir -p dist
           cp dist/app dist/ProtonDeskX-${{ github.run_number }}.x86_64.AppImage
-      - name: List artifacts
-        run: ls -l dist
 
-
-
-
-
+      - name: Upload artifact (for download)
         uses: actions/upload-artifact@v4
         with:
           name: ProtonDeskX
@@ -49,8 +42,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Download built binary
         uses: actions/download-artifact@v4
