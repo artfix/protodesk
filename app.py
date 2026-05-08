@@ -133,7 +133,7 @@ class TempPage(QWebEnginePage):
 
         self.allowlist = [
 
-            'mail.proton.me', 'calendar.proton.me', 'drive.proton.me', 'account.proton.me']
+            'mail.proton.me', 'account.proton.me']
 
 
 
@@ -181,7 +181,7 @@ class ProtonWebView(QWebEngineView):
 
     """
 
-    Custom QWebEngineView for Protodesk
+    Custom QWebEngineView for Protondeskx
 
     """
 
@@ -331,7 +331,7 @@ class ProtonDesktopApp(QMainWindow):
 
         # enable on-disk persistence for session data
 
-        profile = QWebEngineProfile('protodesk')
+        profile = QWebEngineProfile('protondeskx')
 
 
 
