@@ -1,18 +1,22 @@
-# Protodesk
+# ProtonDesk-X
 
 <p align="center">
   <img src="./assets/logo.png" alt="Logo" width="200" height="200"/>
 </p>
 
-<p align="center">Unofficial desktop app for Proton</p>
+<p align="center">Unofficial LINUX desktop app for Proton services</p>
 
 <p align="center">
   <img src="./scrshots/showcase.gif" alt="Screenshots"/>
 </p>
 
+
+
 ## About
 
-**Protodesk** is a free open‑source desktop app for Proton. It brings together Proton Mail, Proton Calendar and Proton Drive into a single Linux application.
+**ProtonDesk-X** is a free open‑source desktop app for Proton services. It brings together Proton Mail, Proton Calendar, Proton Drive, Proton Docs, Proton Pass, Proton Wallet, Proton LumoAI, Proton Meet into a single Linux application.
+
+
 
 ## Features
 
@@ -21,15 +25,19 @@
 - **File downloads** – attachments from Proton Mail can be downloaded.
 - **Open‑source** – the source code is available for inspection.
 
+
+
 ## Download
 
-Only Linux is supported (AppImage). The AppImage can be downloaded from the releases page.
+Only Linux is supported (.AppImage). The AppImage can be downloaded from the releases page.
 
 <p align="center">
-  <a href="https://github.com/YourName/protodesk/releases/download/v1.4.0/Protodesk-1.4.0-x86_64.AppImage">
-    <img src="./assets/download.png" alt="Download AppImage" height="75"/>
+  <a href="https://github.com/artfix/ProtonDesk-X/releases">
+    <img src="./assets/download.png" alt="Download AppImage" height="50"/>
   </a>
 </p>
+
+
 
 ## Contributions
 
@@ -39,16 +47,19 @@ We welcome contributions. Fork the repository, create a branch, make changes, co
 
 ## Packaging & Distribution
 
-The app is built as an AppImage on Linux. The CI workflow in `.github/workflows/cd.yml` runs on every push to `main`.
+The app is built as an AppImage on Linux. The CI workflow in `.github/workflows/cd.yml` runs on every push to `main` , `release.yaml` build all and upload to git.
 
 To build locally:
 
 ```bash
 pip install -r requirements.txt
-python -m PyInstaller --onefile --add-data "assets;assets" --add-data "scrshots;scrshots" app.py
-appimagetool ./dist/Protodesk-1.4.0-x86_64.AppImage
+pyinstaller --onefile app.py
 ```
+
+The compiled file will be in the `dist` folder.
+
+
 
 ## Developers & Maintainers
 
-YourName – [yourname@yourdomain.com](mailto:yourname@yourdomain.com)
+ArtFix – [artfix@protonmail.com](mailto:artfix@protonmail.com)
