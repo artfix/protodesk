@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=ProtonDesk-X
+Exec=/home/USER/Applications/ProtonDeskX.v18.x86_64.AppImage
+Icon=/home/USER/.local/share/icons/logo.png
+Type=Application
+Categories=Office;
+Terminal=false
