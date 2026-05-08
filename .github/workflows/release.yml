@@ -30,13 +30,13 @@ jobs:
       - name: Archive build
         run: |
           mkdir -p dist
-          cp dist/app dist/ProtonDeskX.AppImage
+          cp dist/app dist/ProtonDeskX-${APP_VERSION}.x86_64.AppImage
 
       - name: Upload artifact (for download)
         uses: actions/upload-artifact@v4
         with:
           name: ProtonDeskX
-          path: dist/ProtonDeskX.AppImage
+          path: dist/ProtonDeskX-${APP_VERSION}.x86_64.AppImage
 
   release:
     needs: build
@@ -59,6 +59,6 @@ jobs:
           tag_name: v${{ github.run_number }}
           name: Release ${{ github.run_number }}
           files: |
-            ProtonDeskX.AppImage
+            ProtonDeskX-${APP_VERSION}.x86_64.AppImage
           draft: false
           prerelease: false

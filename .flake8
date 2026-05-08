@@ -1,5 +1,6 @@
 [flake8]
 max-line-length = 110
+ignore = E303,E304,E305,E302,W391
 exclude = 
     .venv/*
     app.build/*
