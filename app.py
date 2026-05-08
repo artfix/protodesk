@@ -133,7 +133,7 @@ class TempPage(QWebEnginePage):
 
         self.allowlist = [
 
-            'mail.proton.me', 'account.proton.me']
+            'mail.proton.me', 'calendar.proton.me', 'drive.proton.me', 'docs.proton.me', 'pass.proton.me', 'wallet.proton.me', 'lumo.proton.me', 'meet.proton.me', 'account.proton.me']
 
 
 
